@@ -3,9 +3,9 @@
 Premium gaming & anime merchandise storefront. Dark-first, fashion-forward,
 built to feel handcrafted — not like a Shopify template or an AI mockup.
 
-> **Status:** foundation. This branch ships the scaffold, the design system,
-> and the app shell. Merchandising pages (hero, catalogue, product, cart,
-> checkout, account, search) land in subsequent feature branches — see the
+> **Status:** homepage hero. On top of the foundation, this branch ships the
+> homepage hero and the featured-collection band. Catalogue, product, cart,
+> checkout, account, and search land in subsequent feature branches — see the
 > [roadmap](#branch-roadmap).
 
 ## Stack
@@ -60,8 +60,10 @@ src/
 │  ├─ layout/               # app-shell chrome (header, footer, skip link)
 │  ├─ providers/            # theme provider
 │  └─ ui/                   # design-system primitives (button, container, …)
+├─ features/
+│  └─ home/                 # homepage sections: hero, featured collection, garments, data
 ├─ config/                  # site identity + navigation (single source of truth)
-└─ lib/                     # fonts, seo helpers, utils
+└─ lib/                     # fonts, seo helpers, price formatter, utils
 ```
 
 **Server vs client:** everything is a Server Component by default. Client
@@ -105,6 +107,42 @@ licensed `.woff2` files into `public/fonts/` and switch the relevant import in
 `src/lib/fonts.ts` from `next/font/google` to `next/font/local`. Nothing else
 changes — all components read the `--font-*` variables.
 
+## Homepage — hero + featured collection
+
+The homepage opens with a statement hero and presents the store's inaugural
+house capsule (**Nocturne · Vol. 01** — original, not a licensed franchise, per
+the brief's ban on copyrighted artwork).
+
+**Product imagery without photos or generated art.** There are no real product
+shots yet and franchise art is off-limits, so garments are rendered as original
+**technical flats** — the front-view cut-sheet line drawings apparel studios use
+in a tech pack (`src/features/home/garments.tsx`). They're on-brand for the
+collector/spec-sheet voice, theme-aware (token-driven fill/stroke), and weigh
+nothing — no image bytes to hurt LCP. The hero frames the drop's hero garment as
+an annotated cut-sheet (registration ticks, spec callouts on leaders, a `New
+drop` marker), which is the page's signature moment.
+
+**Content is data, not filler.** Every field in `src/features/home/collection.ts`
+is a real product attribute — weight (GSM), cut, colorways, edition size, honest
+stock status — so the mono spec-lines carry information. No lorem, no fake
+reviews, no fake countdown (the animated drop timer is its own later section).
+
+**Motion stack — Framer Motion, not GSAP (yet).** The brief lists GSAP +
+ScrollTrigger for the hero. A single load reveal, on-scroll stagger, and a
+subtle plate parallax are fully served by Framer Motion, which the foundation
+already ships — so pulling in GSAP here would add bundle weight against the 95+
+Lighthouse target for no gain. GSAP earns its place when a section needs true
+timeline choreography (scroll storytelling in `home-sections`, or the 3D hero).
+All motion is gated on `prefers-reduced-motion`.
+
+**Scope.** This is the hero and the featured-collection band only. The trending
+grid (quick-add, wishlist, alternate images), category cards, franchises,
+countdown, community, and newsletter belong to `feat/home-sections`. Per-product
+pages arrive with `feat/product-detail`; until then the CTAs and cards point at
+`/drops`, which resolves to the designed 404 — the foundation's "soon" pattern.
+Product/ItemList JSON-LD is intentionally deferred to the product branch so the
+structured data stays truthful (no prices/availability endpoints exist yet).
+
 ## UX rationale (Laws of UX)
 
 Applied throughout and documented inline where they drive a decision:
@@ -141,8 +179,8 @@ automatically.
 
 Strict feature-branch workflow — one shippable feature per branch, merged via PR.
 
-- [x] `feat/project-foundation` — scaffold, design system, app shell *(this branch)*
-- [ ] `feat/home-hero` — homepage hero + featured collection
+- [x] `feat/project-foundation` — scaffold, design system, app shell
+- [x] `feat/home-hero` — homepage hero + featured collection *(this branch)*
 - [ ] `feat/home-sections` — categories, trending grid, new drops, franchises, community, newsletter
 - [ ] `feat/product-listing` — PLP: filters, sorting, grid/list, infinite scroll
 - [ ] `feat/product-detail` — PDP: gallery, size guide, sticky purchase panel, reviews
