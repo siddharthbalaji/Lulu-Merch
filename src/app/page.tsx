@@ -4,6 +4,7 @@ import { Trending } from "@/features/home/trending";
 import { NewDrops } from "@/features/home/new-drops";
 import { FeaturedCollection } from "@/features/home/featured-collection";
 import { Franchises } from "@/features/home/franchises";
+import { Gaming, Movies } from "@/features/home/coming-soon";
 import { Countdown } from "@/features/home/countdown";
 import { Community } from "@/features/home/community";
 import { Newsletter } from "@/features/home/newsletter";
@@ -27,6 +28,8 @@ export default function HomePage() {
       <NewDrops />
       <FeaturedCollection />
       <Franchises />
+      <Gaming />
+      <Movies />
       <Countdown />
       <Community />
       <Newsletter />

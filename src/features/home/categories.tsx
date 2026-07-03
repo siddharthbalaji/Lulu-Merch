@@ -1,16 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { DragonStar } from "@/components/ui/star";
-import { GarmentFlat } from "./garments";
+import { products } from "@/features/catalog/products";
 import { cn } from "@/lib/utils";
 
 /**
- * Featured categories — the five doors into the catalogue.
+ * Featured categories — the doors into the catalogue, each fronted by a real
+ * studio photo of a piece from that line (no SVG mockups).
  *
  * UX rationale (Laws of UX):
- *   Hick's Law    — exactly five choices; the store's whole surface area, not a wall.
- *   Miller's Law  — five sits inside the 7±2 comfortable chunk.
+ *   Hick's Law    — a short, scannable set; the store's surface, not a wall.
  *   Von Restorff  — "Limited Drops" is the one red-filled tile, so it draws the eye.
  *   Law of Similarity — uniform inked tiles read instantly as one navigation set.
  *   Fitts's Law   — each entire tile is the tap target.
@@ -20,17 +21,21 @@ interface Cat {
   label: string;
   href: string;
   kicker: string;
-  flat?: "tee" | "hoodie" | "varsity";
+  /** Slug of a product whose photo fronts the tile. */
+  cover: string;
   accent?: boolean;
 }
 
 const cats: Cat[] = [
-  { label: "Dragon Ball", href: "/shop?line=Dragon+Ball", kicker: "The flagship line", flat: "tee" },
-  { label: "Naruto", href: "/shop?line=Naruto", kicker: "Leaf Village drops", flat: "tee" },
-  { label: "One Piece", href: "/shop?line=One+Piece", kicker: "Straw Hat crew", flat: "hoodie" },
-  { label: "Demon Slayer", href: "/shop?line=Demon+Slayer", kicker: "Hashira heat", flat: "varsity" },
-  { label: "Limited Drops", href: "/shop?limited=1", kicker: "Numbered. No restock.", accent: true },
+  { label: "Dragon Ball", href: "/shop?line=Dragon+Ball", kicker: "The flagship line", cover: "dragon-ball-classic-tee" },
+  { label: "Naruto", href: "/shop?line=Naruto", kicker: "Leaf Village drops", cover: "naruto-tee" },
+  { label: "One Piece", href: "/shop?line=One+Piece", kicker: "Straw Hat crew", cover: "one-piece-tee" },
+  { label: "Demon Slayer", href: "/shop?line=Demon+Slayer", kicker: "Hashira heat", cover: "demon-slayer-tee" },
+  { label: "Limited Drops", href: "/shop?limited=1", kicker: "Numbered. No restock.", cover: "zoro-sanji-tee", accent: true },
 ];
+
+const coverOf = (slug: string) =>
+  products.find((p) => p.slug === slug)?.image ?? products[0]!.image;
 
 export function Categories() {
   return (
@@ -57,13 +62,8 @@ export function Categories() {
                 cat.accent && "bg-kame"
               )}
             >
-              <div className="flex items-start justify-between">
-                <span
-                  className={cn(
-                    "spec-line",
-                    cat.accent ? "text-on-brand/80" : "text-muted"
-                  )}
-                >
+              <div className="relative z-10 flex items-start justify-between">
+                <span className={cn("spec-line", cat.accent ? "text-on-brand/85" : "text-muted")}>
                   {cat.kicker}
                 </span>
                 <ArrowUpRight
@@ -75,19 +75,26 @@ export function Categories() {
                 />
               </div>
 
-              {cat.flat ? (
-                <div className="pointer-events-none absolute inset-x-0 bottom-8 flex h-1/2 items-center justify-center opacity-70 transition-transform duration-500 ease-brand group-hover:scale-105">
-                  <GarmentFlat kind={cat.flat} className="h-full w-auto" />
+              {/* Real product photo */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-6 top-8 flex items-center justify-center">
+                <div className="relative h-full w-full">
+                  <Image
+                    src={coverOf(cat.cover)}
+                    alt=""
+                    aria-hidden
+                    fill
+                    sizes="(max-width: 768px) 45vw, 20vw"
+                    className={cn(
+                      "object-contain transition-transform duration-500 ease-brand group-hover:scale-105",
+                      cat.accent && "opacity-95"
+                    )}
+                  />
                 </div>
-              ) : (
-                <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-30">
-                  <DragonStar className="h-16 w-16" />
-                </div>
-              )}
+              </div>
 
               <h3
                 className={cn(
-                  "relative font-poster text-2xl uppercase leading-none tracking-tight",
+                  "relative z-10 font-poster text-2xl uppercase leading-none tracking-tight",
                   cat.accent ? "text-on-brand" : "text-paper"
                 )}
               >

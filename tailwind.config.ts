@@ -61,9 +61,10 @@ const config: Config = {
         danger: "rgb(var(--color-danger) / <alpha-value>)",
       },
       fontFamily: {
-        // Poster face — heavy condensed impact for hero-scale statements,
-        // echoing the bold energy of the brand logotype. Used sparingly.
-        poster: ["var(--font-poster)", "var(--font-display)", "Impact", "sans-serif"],
+        // Poster face — the Dragon Ball Z "Saiyan Sans" logotype when present
+        // (dropped into /public/fonts, see globals.css), falling back to Anton
+        // so headings keep their heavy impact until the .ttf is installed.
+        poster: ['"Saiyan Sans"', "var(--font-poster)", "var(--font-display)", "Impact", "sans-serif"],
         display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],

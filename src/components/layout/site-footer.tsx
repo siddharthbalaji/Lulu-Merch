@@ -17,7 +17,9 @@ export function SiteFooter() {
       <Container className="py-14">
         <div className="grid gap-12 md:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div className="max-w-xs">
-            <Logo />
+            {/* Fixed height + w-auto renders the wordmark at its native
+                aspect ratio (1200×273) so it never stretches. */}
+            <Logo className="h-11 w-auto" />
             <p className="mt-4 text-sm leading-relaxed text-muted">
               Premium gaming and anime apparel — built for the people who
               actually finish the game and the season. Made to be worn, not
@@ -31,12 +33,22 @@ export function SiteFooter() {
               <ul className="flex flex-col gap-3">
                 {col.links.map((link) => (
                   <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-muted transition-colors hover:text-paper"
-                    >
-                      {link.label}
-                    </Link>
+                    {link.soon ? (
+                      // Not built yet — show it on the map without linking to a 404.
+                      <span className="inline-flex items-center gap-2 text-sm text-faint">
+                        {link.label}
+                        <span className="rounded-sm border border-line px-1 py-0.5 font-mono text-[0.55rem] uppercase tracking-wider text-faint">
+                          Soon
+                        </span>
+                      </span>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="text-sm text-muted transition-colors hover:text-paper"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

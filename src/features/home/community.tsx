@@ -1,30 +1,36 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Instagram } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { DragonStar } from "@/components/ui/star";
-import { GarmentFlat } from "./garments";
+import { products } from "@/features/catalog/products";
 import { siteConfig } from "@/config/site";
 
 /**
  * Community — an invitation, not invented testimonials. The tiles are the
- * studio lookbook (our own flats), and the module's real job is to route
- * people to submit their fits via the tag. No fabricated customers, no fake
- * five-star quotes (both explicitly barred by the brief).
+ * studio lookbook (real product photography), and the module's real job is to
+ * route people to submit their fits via the tag. No fabricated customers, no
+ * fake five-star quotes.
  *
  * UX rationale (Laws of UX):
  *   Law of Similarity — a uniform tile wall reads as one gallery.
  *   Peak-End — a warm, human close before the newsletter's final ask.
- *   Aesthetic-Usability — restraint over stock cosplay photography.
+ *   Aesthetic-Usability — real product shots over placeholder art.
  */
 
-const tiles: Array<{ kind: "tee" | "hoodie" | "varsity"; tag: string }> = [
-  { kind: "hoodie", tag: "Nocturne Hoodie" },
-  { kind: "tee", tag: "Kame House Tee" },
-  { kind: "varsity", tag: "Respawn Varsity" },
-  { kind: "tee", tag: "Guild Tee" },
-  { kind: "hoodie", tag: "Sennin Hoodie" },
-  { kind: "varsity", tag: "Nocturne Varsity" },
+// Six real pieces spanning the lines, used as the studio lookbook wall.
+const tileSlugs = [
+  "dragon-ball-classic-tee",
+  "naruto-tee",
+  "one-piece-tee",
+  "demon-slayer-tee",
+  "bleach-tee",
+  "zoro-sanji-tee",
 ];
+
+const tiles = tileSlugs
+  .map((slug) => products.find((p) => p.slug === slug))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
 export function Community() {
   return (
@@ -53,12 +59,18 @@ export function Community() {
         </div>
 
         <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          {tiles.map((t, i) => (
-            <li key={i} className="panel group aspect-square overflow-hidden">
-              <div className="relative flex h-full items-center justify-center bg-elevated p-6">
-                <GarmentFlat kind={t.kind} className="h-full w-auto transition-transform duration-500 ease-brand group-hover:scale-105" />
-                <span className="spec-line absolute bottom-2 left-2 text-[0.55rem] text-faint">{t.tag}</span>
-              </div>
+          {tiles.map((p) => (
+            <li key={p.slug} className="panel group aspect-square overflow-hidden">
+              <Link href={`/product/${p.slug}`} className="relative flex h-full items-center justify-center bg-elevated p-4">
+                <Image
+                  src={p.image}
+                  alt={`${p.name} — ${p.line}`}
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                  className="object-contain p-4 transition-transform duration-500 ease-brand group-hover:scale-105"
+                />
+                <span className="spec-line absolute bottom-2 left-2 z-10 text-[0.55rem] text-faint">{p.name}</span>
+              </Link>
             </li>
           ))}
         </ul>

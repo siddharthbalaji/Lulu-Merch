@@ -3,6 +3,21 @@
 @tailwind utilities;
 
 /*
+ * Saiyan Sans — the Dragon Ball Z display face (Ben Palmer, 100% free,
+ * dafont.com/saiyan-sans.font). Drop the .ttf at the path below and every
+ * `font-poster` heading swaps to it automatically; until then the stack falls
+ * back to Anton so nothing breaks. Run `npm run fonts` (see scripts/) to fetch
+ * and install it in one step. Uppercase-only face, which suits our headings.
+ */
+@font-face {
+  font-family: "Saiyan Sans";
+  src: url("/fonts/saiyan-sans/Saiyan-Sans.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
  * Lulu Merch — design tokens.
  *
  * LIGHT-FIRST. The store is a clean white canvas (per brief: reference
@@ -146,6 +161,31 @@
   .panel-hover:hover {
     transform: translate(-2px, -2px);
     box-shadow: 6px 6px 0 0 rgb(var(--color-line-strong));
+  }
+
+  /*
+   * DBZ logotype treatment — lifted straight from the Lulu Merch mark:
+   * Saiyan-gold fill, a heavy black keyline, and a red 3D drop beneath.
+   * Reserve it for hero-scale display type; the black stroke is too heavy
+   * for anything small. Reads on both the light canvas and the dark theme.
+   */
+  .dbz-title {
+    color: rgb(var(--color-saiyan));
+    -webkit-text-stroke: 3px #0b0b0d;
+    paint-order: stroke fill;
+    text-shadow:
+      0 4px 0 rgb(var(--color-kame)),
+      0 5px 0 #0b0b0d,
+      0 7px 10px rgb(0 0 0 / 0.28);
+    letter-spacing: 0.015em;
+  }
+  /* Fallback for engines without text-stroke: build the outline from shadows. */
+  @supports not ((-webkit-text-stroke: 3px #000) or (text-stroke: 3px #000)) {
+    .dbz-title {
+      text-shadow:
+        -2px -2px 0 #0b0b0d, 2px -2px 0 #0b0b0d, -2px 2px 0 #0b0b0d, 2px 2px 0 #0b0b0d,
+        0 5px 0 rgb(var(--color-kame));
+    }
   }
 
   /* Saiyan-gold highlight swipe behind inline text (Von Restorff). */

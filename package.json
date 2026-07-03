@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "fonts": "bash scripts/get-saiyan-font.sh"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.0",

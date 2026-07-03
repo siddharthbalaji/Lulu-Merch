@@ -50,6 +50,8 @@ export const footerNav: FooterColumn[] = [
       { label: "Naruto", href: "/shop?line=Naruto" },
       { label: "One Piece", href: "/shop?line=One+Piece" },
       { label: "Limited Edition", href: "/shop?limited=1" },
+      { label: "Gaming", href: "/#gaming-heading" },
+      { label: "Movies & Comics", href: "/#movies-heading" },
     ],
   },
   {

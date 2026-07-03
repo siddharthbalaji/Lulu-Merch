@@ -7,9 +7,11 @@ import { siteConfig } from "@/config/site";
  */
 export const baseMetadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  // Browser-tab title. `default` is what shows on the homepage tab; `template`
+  // wraps sub-page titles (e.g. "Shop all — Lulu Merch").
   title: {
-    default: `${siteConfig.name} — ${siteConfig.tagline}`,
-    template: `%s — ${siteConfig.name}`,
+    default: "Lulu Merch",
+    template: "%s — Lulu Merch",
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,

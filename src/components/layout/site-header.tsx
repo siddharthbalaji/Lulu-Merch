@@ -30,11 +30,34 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const reduceMotion = useReducedMotion();
 
+  // Scroll state with HYSTERESIS. The header changes height when `scrolled`
+  // flips; because the header is sticky, that height change shifts layout,
+  // which can move the scroll position back across a single threshold and
+  // flip the state again — the "twitch" the user reported. Two separated
+  // thresholds (enter >80, exit <24) create a dead zone so one height change
+  // can never trigger the opposite flip. rAF throttling coalesces the burst
+  // of scroll events into one state read per frame.
   React.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
+    let frame = 0;
+    const read = () => {
+      frame = 0;
+      const y = window.scrollY;
+      setScrolled((prev) => {
+        if (!prev && y > 80) return true;
+        if (prev && y < 24) return false;
+        return prev;
+      });
+    };
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(read);
+    };
+    read();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
   React.useEffect(() => {
@@ -93,30 +116,42 @@ export function SiteHeader() {
           </Button>
         </div>
 
-        {/* Center brand — full wordmark → compact mark on scroll. */}
+        {/* Center brand — wordmark → compact mark on scroll.
+            Both marks share ONE box and crossfade in place (opacity only),
+            while the box animates between two fixed sizes. Nothing reflows,
+            so the swap reads as a smooth dissolve instead of a jump, and the
+            `py-1.5` keeps the artwork off the keyline border. */}
         <Link
           href="/"
           aria-label={`${siteConfig.name} — home`}
-          className="justify-self-center rounded-sm outline-none focus-visible:outline-2 focus-visible:outline-kame"
+          className="justify-self-center rounded-sm py-1.5 outline-none focus-visible:outline-2 focus-visible:outline-kame"
         >
           <span className="sr-only">{siteConfig.name} — home</span>
           <span
             aria-hidden
             className={cn(
-              "block transition-all duration-300 ease-brand",
-              scrolled ? "h-8 w-0 overflow-hidden opacity-0" : "h-9 opacity-100 md:h-10"
+              "relative block transition-[width,height] duration-300 ease-brand",
+              scrolled
+                ? "h-10 w-12 md:h-11 md:w-14"
+                : "h-11 w-[210px] md:h-[3.25rem] md:w-[248px]"
             )}
           >
-            <Logo variant="wordmark" priority className="h-full" />
-          </span>
-          <span
-            aria-hidden
-            className={cn(
-              "block transition-all duration-300 ease-brand",
-              scrolled ? "h-9 opacity-100" : "h-0 w-0 overflow-hidden opacity-0"
-            )}
-          >
-            <Logo variant="mark" className="h-full" />
+            <span
+              className={cn(
+                "absolute inset-0 flex items-center justify-center transition-opacity duration-300 ease-brand",
+                scrolled ? "opacity-0" : "opacity-100"
+              )}
+            >
+              <Logo variant="wordmark" priority className="h-full w-auto" />
+            </span>
+            <span
+              className={cn(
+                "absolute inset-0 flex items-center justify-center transition-opacity duration-300 ease-brand",
+                scrolled ? "opacity-100" : "opacity-0"
+              )}
+            >
+              <Logo variant="mark" className="h-full w-auto" />
+            </span>
           </span>
         </Link>
 
