@@ -69,9 +69,10 @@ export function Hero() {
             <motion.h1
               id="hero-heading"
               variants={rise}
-              className="dbz-title mt-3 font-poster text-[clamp(2.4rem,7.5vw,5rem)] uppercase leading-[0.98] tracking-tight md:mt-4"
+              className="mt-3 font-poster text-[clamp(2.4rem,7.5vw,5rem)] uppercase leading-[1.02] tracking-tight md:mt-4"
             >
-              Wear what<br />you main.
+              <span className="dbz-title block">Wear what</span>
+              <span className="dbz-title-red block">you main.</span>
             </motion.h1>
 
             <motion.p variants={rise} className="mt-4 max-w-prose text-base text-muted md:mt-5 md:text-lg">

@@ -58,20 +58,18 @@ the whole band; a "Notify me" button routes to the newsletter. Text labels only
   square from `lulu-mark.png`), `public/icon.png`, and `public/favicon.ico`;
   removed the old placeholder `icon.svg`; updated `manifest.ts`.
 
-### 9. Saiyan Sans DBZ font + colour treatment (priority 2) — WIRED UP
-- `@font-face` for **Saiyan Sans** added in `globals.css`, and the font is first
-  in the `poster` family (`tailwind.config.ts`), so every `font-poster` heading
-  uses it when present and **falls back to Anton** otherwise (nothing breaks if
-  the file is absent).
-- `.dbz-title` utility recreates the logo look: **Saiyan-gold fill, heavy black
-  keyline, red 3D drop**. Applied to the hero headline.
-- **One step for you:** the font is hosted on dafont (which blocks automated
-  download), so run this once to install the free file:
-  ```bash
-  npm run fonts
-  ```
-  It downloads `Saiyan-Sans.ttf` into `public/fonts/saiyan-sans/`. See
-  `public/fonts/saiyan-sans/README.md`.
+### 9. Saiyan Sans DBZ font + colour treatment (priority 2) — DONE
+- **The font is now installed** at `public/fonts/saiyan-sans/Saiyan-Sans.ttf`
+  (family name "Saiyan Sans"), loaded via `@font-face` in `globals.css` and set
+  first in the `poster` family (`tailwind.config.ts`) — so every `font-poster`
+  heading renders in the DBZ face, falling back to Anton if the file is ever
+  removed. No setup step needed anymore (the `npm run fonts` script still exists
+  as a convenience for re-fetching).
+- **Two-tone logo treatment**, straight from the mark: `.dbz-title` is the
+  Saiyan-gold fill (like "LULU"), `.dbz-title-red` is the Kame-red fill (like
+  "MERCH"), both with a heavy **black keyline** (`-webkit-text-stroke` +
+  `paint-order: stroke fill`) and a black 3D drop. The hero headline uses both —
+  "Wear what" in gold, "you main." in red.
 
 ---
 

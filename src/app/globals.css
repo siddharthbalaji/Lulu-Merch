@@ -165,26 +165,33 @@
 
   /*
    * DBZ logotype treatment — lifted straight from the Lulu Merch mark:
-   * Saiyan-gold fill, a heavy black keyline, and a red 3D drop beneath.
-   * Reserve it for hero-scale display type; the black stroke is too heavy
-   * for anything small. Reads on both the light canvas and the dark theme.
+   * a heavy black keyline around a solid fill, with a black 3D drop for depth.
+   * `.dbz-title` is the Saiyan-gold fill (like "LULU"); `.dbz-title-red` is the
+   * Kame-red fill (like "MERCH"). Use them together for the two-tone logo look.
+   * Reserve for hero-scale display type; the black stroke is too heavy small.
    */
-  .dbz-title {
-    color: rgb(var(--color-saiyan));
+  .dbz-title,
+  .dbz-title-red {
     -webkit-text-stroke: 3px #0b0b0d;
     paint-order: stroke fill;
     text-shadow:
-      0 4px 0 rgb(var(--color-kame)),
-      0 5px 0 #0b0b0d,
-      0 7px 10px rgb(0 0 0 / 0.28);
+      0 3px 0 #0b0b0d,
+      0 6px 9px rgb(0 0 0 / 0.28);
     letter-spacing: 0.015em;
+  }
+  .dbz-title {
+    color: rgb(var(--color-saiyan));
+  }
+  .dbz-title-red {
+    color: rgb(var(--color-kame));
   }
   /* Fallback for engines without text-stroke: build the outline from shadows. */
   @supports not ((-webkit-text-stroke: 3px #000) or (text-stroke: 3px #000)) {
-    .dbz-title {
+    .dbz-title,
+    .dbz-title-red {
       text-shadow:
         -2px -2px 0 #0b0b0d, 2px -2px 0 #0b0b0d, -2px 2px 0 #0b0b0d, 2px 2px 0 #0b0b0d,
-        0 5px 0 rgb(var(--color-kame));
+        0 5px 0 #0b0b0d;
     }
   }
 
