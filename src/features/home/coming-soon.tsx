@@ -53,7 +53,7 @@ function ComingSoonBand({
             </p>
             <h2
               id={`${id}-heading`}
-              className="mt-3 flex items-center gap-3 font-poster text-d-lg uppercase tracking-tight text-paper md:text-d-xl"
+              className="mt-3 flex items-center gap-3 font-poster text-d-lg uppercase dbz-outline md:text-d-xl"
             >
               <span
                 className={cn(
@@ -103,7 +103,7 @@ function ComingSoonBand({
                         {tone === "gaming" ? "Game" : "Title"}
                       </span>
 
-                      <span className="font-poster text-xl uppercase leading-none tracking-tight text-paper">
+                      <span className="font-poster text-xl uppercase leading-none dbz-outline">
                         {label}
                       </span>
                     </div>

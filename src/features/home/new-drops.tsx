@@ -29,7 +29,7 @@ export function NewDrops() {
             <p className="spec-line flex items-center gap-2">
               <DragonStar className="h-4 w-4" /> Fresh off the press
             </p>
-            <h2 id="drops-heading" className="mt-3 font-poster text-d-lg uppercase tracking-tight text-paper md:text-d-xl">
+            <h2 id="drops-heading" className="mt-3 font-poster text-d-lg uppercase dbz-outline md:text-d-xl">
               New drops
             </h2>
           </div>
@@ -57,7 +57,7 @@ export function NewDrops() {
               />
             </div>
             <div className="relative">
-              <h3 className="font-poster text-3xl uppercase leading-none tracking-tight text-paper">{lead.name}</h3>
+              <h3 className="font-poster text-3xl uppercase leading-none dbz-outline">{lead.name}</h3>
               <p className="spec-line mt-2">{lead.className} · {lead.spec}</p>
               <p className="mt-3 font-mono text-lg font-semibold tabular text-paper">{formatPrice(lead.price)}</p>
             </div>

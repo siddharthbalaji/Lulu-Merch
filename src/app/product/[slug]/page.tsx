@@ -83,7 +83,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             <p className="spec-line flex items-center gap-2">
               <DragonStar className="h-4 w-4" /> Pairs well with
             </p>
-            <h2 id="related-heading" className="mt-3 font-poster text-d-lg uppercase tracking-tight text-paper">
+            <h2 id="related-heading" className="mt-3 font-poster text-d-lg uppercase dbz-outline">
               You might also like
             </h2>
             <ul className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">

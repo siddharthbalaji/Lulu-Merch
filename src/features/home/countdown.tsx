@@ -58,7 +58,7 @@ export function Countdown() {
               <p className="spec-line flex items-center gap-2 text-muted">
                 <DragonStar className="h-4 w-4" /> Weekly drop
               </p>
-              <h2 id="cd-heading" className="mt-3 font-poster text-d-lg uppercase leading-none tracking-tight text-paper md:text-d-xl">
+              <h2 id="cd-heading" className="mt-3 font-poster text-d-lg uppercase leading-none dbz-outline md:text-d-xl">
                 Next drop lands<br />Saturday, noon.
               </h2>
               <p className="mt-4 max-w-md text-muted">

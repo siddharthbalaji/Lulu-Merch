@@ -13,7 +13,7 @@ export default function NotFound() {
       <p className="spec-line flex items-center gap-2">
         <DragonStar className="h-4 w-4" /> Error <span className="tick mx-1" /> 404
       </p>
-      <h1 className="mt-5 max-w-[16ch] font-poster text-d-lg uppercase tracking-tight text-paper md:text-d-xl">
+      <h1 className="mt-5 max-w-[16ch] font-poster text-d-lg uppercase dbz-outline md:text-d-xl">
         This drop hasn&apos;t landed.
       </h1>
       <p className="mt-4 max-w-prose text-lg text-muted">

@@ -95,7 +95,7 @@ export function CheckoutClient() {
     return (
       <div className="panel mx-auto flex max-w-lg flex-col items-center gap-4 p-10 text-center">
         <CheckCircle2 className="h-14 w-14 text-kame" aria-hidden />
-        <h1 className="font-poster text-3xl uppercase tracking-tight text-paper">Order placed</h1>
+        <h1 className="font-poster text-3xl uppercase dbz-outline">Order placed</h1>
         <p className="text-muted">
           Thanks, {f.name.split(" ")[0] || "friend"} — a confirmation is on its way to{" "}
           <span className="font-medium text-paper">{f.email}</span>. This is a demonstration checkout,
@@ -112,7 +112,7 @@ export function CheckoutClient() {
     return (
       <div className="panel mx-auto flex max-w-lg flex-col items-center gap-4 p-10 text-center">
         <ShoppingBag className="h-12 w-12 text-muted" aria-hidden />
-        <h1 className="font-poster text-3xl uppercase tracking-tight text-paper">Your cart is empty</h1>
+        <h1 className="font-poster text-3xl uppercase dbz-outline">Your cart is empty</h1>
         <p className="text-muted">Add a piece or two and they&rsquo;ll show up here.</p>
         <Button asChild variant="primary" className="mt-2">
           <Link href="/shop">Browse the shop</Link>

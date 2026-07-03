@@ -37,7 +37,7 @@ export default function ShopPage({
           <p className="spec-line flex items-center gap-2">
             <DragonStar className="h-4 w-4" /> The full range
           </p>
-          <h1 className="mt-3 font-poster text-d-lg uppercase tracking-tight text-paper md:text-d-xl">
+          <h1 className="mt-3 font-poster text-d-lg uppercase dbz-outline md:text-d-xl">
             Shop all
           </h1>
           <p className="mt-3 max-w-2xl text-muted">

@@ -13,7 +13,7 @@ export default function CheckoutPage() {
   return (
     <div className="py-10 md:py-14">
       <Container>
-        <h1 className="mb-8 font-poster text-d-lg uppercase tracking-tight text-paper md:text-d-xl">
+        <h1 className="mb-8 font-poster text-d-lg uppercase dbz-outline md:text-d-xl">
           Checkout
         </h1>
         <CheckoutClient />

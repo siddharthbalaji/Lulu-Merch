@@ -185,6 +185,28 @@
   .dbz-title-red {
     color: rgb(var(--color-kame));
   }
+
+  /*
+   * Outlined display heading — white fill inside a black keyline, so each
+   * chunky Saiyan-Sans glyph gets its own hard outline and adjacent letters
+   * read as separate shapes instead of merging. Used for section/page titles
+   * (the gold/red `.dbz-title` stays reserved for the hero). The positive
+   * letter-spacing replaces the tight tracking that made letters run together.
+   */
+  .dbz-outline {
+    color: #ffffff;
+    -webkit-text-stroke: 2px #0b0b0d;
+    paint-order: stroke fill;
+    text-shadow: 0 2px 0 rgb(0 0 0 / 0.12);
+    letter-spacing: 0.03em;
+  }
+  /* Graceful fallback where text-stroke is unsupported: solid, still legible. */
+  @supports not ((-webkit-text-stroke: 2px #000) or (text-stroke: 2px #000)) {
+    .dbz-outline {
+      color: rgb(var(--color-paper));
+      text-shadow: none;
+    }
+  }
   /* Fallback for engines without text-stroke: build the outline from shadows. */
   @supports not ((-webkit-text-stroke: 3px #000) or (text-stroke: 3px #000)) {
     .dbz-title,

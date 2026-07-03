@@ -47,8 +47,8 @@ export function FeaturedCollection() {
             <p className="spec-line flex items-center gap-2">
               <DragonStar className="h-4 w-4" /> Featured collection
             </p>
-            <h2 id="collection-heading" className="mt-3 font-poster text-d-lg uppercase tracking-tight text-paper md:text-d-xl">
-              Dragon Ball <span className="text-muted">· {drop.vol}</span>
+            <h2 id="collection-heading" className="mt-3 font-poster text-d-lg uppercase dbz-outline md:text-d-xl">
+              Dragon Ball <span className="text-muted [-webkit-text-stroke:0] [text-shadow:none]">· {drop.vol}</span>
             </h2>
           </div>
           <Link

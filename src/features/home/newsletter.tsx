@@ -38,7 +38,7 @@ export function Newsletter() {
           <p className="spec-line flex items-center justify-center gap-2">
             <DragonStar className="h-4 w-4" /> First look
           </p>
-          <h2 id="nl-heading" className="mt-3 font-poster text-d-lg uppercase tracking-tight text-paper md:text-d-xl">
+          <h2 id="nl-heading" className="mt-3 font-poster text-d-lg uppercase dbz-outline md:text-d-xl">
             Get the drop alert
           </h2>
           <p className="mt-3 text-muted">

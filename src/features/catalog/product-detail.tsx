@@ -110,7 +110,7 @@ export function ProductDetail({ product }: { product: Product }) {
         <p className="spec-line flex items-center gap-2 text-faint">
           <DragonStar className="h-4 w-4" /> {product.line}
         </p>
-        <h1 className="mt-2 font-poster text-4xl uppercase leading-none tracking-tight text-paper md:text-5xl">
+        <h1 className="mt-2 font-poster text-4xl uppercase leading-none dbz-outline md:text-5xl">
           {product.name}
         </h1>
         <p className="mt-3 text-muted">{product.className} · {product.spec}</p>
