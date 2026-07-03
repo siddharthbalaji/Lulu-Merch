@@ -36,7 +36,19 @@ const config: Config = {
         // Lines
         line: "rgb(var(--color-line) / <alpha-value>)",
         "line-strong": "rgb(var(--color-line-strong) / <alpha-value>)",
-        // Signature accent — Iris. Used with restraint.
+        // Brand accents — Dragon Ball palette, used with restraint.
+        kame: {
+          DEFAULT: "rgb(var(--color-kame) / <alpha-value>)",
+          soft: "rgb(var(--color-kame-soft) / <alpha-value>)",
+          strong: "rgb(var(--color-kame-strong) / <alpha-value>)",
+        },
+        saiyan: {
+          DEFAULT: "rgb(var(--color-saiyan) / <alpha-value>)",
+          ink: "rgb(var(--color-saiyan-ink) / <alpha-value>)",
+        },
+        flame: "rgb(var(--color-flame) / <alpha-value>)",
+        "on-brand": "rgb(var(--color-on-brand) / <alpha-value>)",
+        // Back-compat alias — maps to Kame red so untouched code stays on-brand.
         iris: {
           DEFAULT: "rgb(var(--color-iris) / <alpha-value>)",
           soft: "rgb(var(--color-iris-soft) / <alpha-value>)",
@@ -49,6 +61,9 @@ const config: Config = {
         danger: "rgb(var(--color-danger) / <alpha-value>)",
       },
       fontFamily: {
+        // Poster face — heavy condensed impact for hero-scale statements,
+        // echoing the bold energy of the brand logotype. Used sparingly.
+        poster: ["var(--font-poster)", "var(--font-display)", "Impact", "sans-serif"],
         display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
@@ -81,9 +96,11 @@ const config: Config = {
         lg: "12px",
       },
       boxShadow: {
-        // Low, believable elevation — no unrealistic glows.
-        soft: "0 1px 2px rgb(0 0 0 / 0.24), 0 8px 24px -12px rgb(0 0 0 / 0.5)",
-        panel: "0 1px 0 rgb(255 255 255 / 0.03) inset, 0 24px 60px -28px rgb(0 0 0 / 0.7)",
+        // Hard, flat offset shadows — the inked comic-panel look, no blur/glow.
+        hard: "3px 3px 0 0 rgb(var(--color-line-strong))",
+        "hard-lg": "5px 5px 0 0 rgb(var(--color-line-strong))",
+        // Low, believable elevation for subtle surfaces.
+        soft: "0 1px 2px rgb(0 0 0 / 0.06), 0 8px 24px -14px rgb(0 0 0 / 0.18)",
       },
       maxWidth: {
         prose: "68ch",
@@ -97,9 +114,14 @@ const config: Config = {
           from: { opacity: "0", transform: "translateY(8px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.5s var(--ease-brand) both",
+        marquee: "marquee 32s linear infinite",
       },
     },
   },

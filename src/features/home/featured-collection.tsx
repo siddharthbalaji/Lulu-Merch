@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Container } from "@/components/ui/container";
+import { DragonStar } from "@/components/ui/star";
 import { formatPrice } from "@/lib/format";
 import {
   featuredDrop,
@@ -56,7 +57,9 @@ export function FeaturedCollection() {
         {/* header */}
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="spec-line">Featured collection</p>
+            <p className="spec-line flex items-center gap-2">
+              <DragonStar className="h-4 w-4" /> Featured collection
+            </p>
             <h2
               id="collection-heading"
               className="mt-3 font-display text-d-md font-bold text-paper md:text-d-lg"
@@ -65,7 +68,7 @@ export function FeaturedCollection() {
             </h2>
           </div>
           <Link
-            href="/drops"
+            href="/shop?sort=new"
             className="group inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-paper"
           >
             View the drop
@@ -97,7 +100,7 @@ export function FeaturedCollection() {
 function PieceCard({ piece }: { piece: CollectionPiece }) {
   return (
     <Link
-      href="/drops"
+      href="/shop?sort=new"
       className="group flex h-full flex-col rounded-lg border border-line bg-surface/50 p-4 transition-colors duration-300 ease-brand hover:border-line-strong"
     >
       {/* stage */}

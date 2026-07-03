@@ -29,11 +29,11 @@ export interface NavItem {
 }
 
 export const primaryNav: NavItem[] = [
-  { label: "New Drops", href: "/drops", soon: true },
-  { label: "Apparel", href: "/apparel", soon: true },
-  { label: "Anime", href: "/anime", soon: true },
-  { label: "Gaming", href: "/gaming", soon: true },
-  { label: "Accessories", href: "/accessories", soon: true },
+  { label: "New Drops", href: "/shop?sort=new" },
+  { label: "Dragon Ball", href: "/shop?line=Dragon+Ball" },
+  { label: "Naruto", href: "/shop?line=Naruto" },
+  { label: "One Piece", href: "/shop?line=One+Piece" },
+  { label: "Shop All", href: "/shop" },
 ];
 
 export interface FooterColumn {
@@ -45,10 +45,11 @@ export const footerNav: FooterColumn[] = [
   {
     title: "Shop",
     links: [
-      { label: "New Drops", href: "/drops", soon: true },
-      { label: "Apparel", href: "/apparel", soon: true },
-      { label: "Accessories", href: "/accessories", soon: true },
-      { label: "Limited Edition", href: "/limited", soon: true },
+      { label: "New Drops", href: "/shop?sort=new" },
+      { label: "Dragon Ball", href: "/shop?line=Dragon+Ball" },
+      { label: "Naruto", href: "/shop?line=Naruto" },
+      { label: "One Piece", href: "/shop?line=One+Piece" },
+      { label: "Limited Edition", href: "/shop?limited=1" },
     ],
   },
   {

@@ -3,58 +3,81 @@
 @tailwind utilities;
 
 /*
- * Design tokens.
+ * Lulu Merch — design tokens.
+ *
+ * LIGHT-FIRST. The store is a clean white canvas (per brief: reference
+ * comicsense.store) with a Dragon Ball-derived accent system pulled straight
+ * from the brand logos: Kame red (#CC232A), Saiyan yellow (#FFF12C), and
+ * Dragon Ball orange (#E49D31), keyed with heavy black comic outlines.
+ *
  * Colors are stored as space-separated RGB channels so Tailwind can apply
- * opacity modifiers. Dark is the default theme (dark-first brief); `.light`
- * on <html> opts into the light theme via next-themes (`value` map below).
+ * opacity modifiers (`bg-paper/60`). `.light` is the default; `.dark` is the
+ * supported secondary theme (brief requires light + dark).
  */
 @layer base {
   :root,
-  .dark {
-    /* Surfaces */
-    --color-ink: 11 11 13;
-    --color-surface: 20 20 23;
-    --color-elevated: 28 28 33;
+  .light {
+    /* Surfaces — white canvas */
+    --color-ink: 255 255 255;        /* app background */
+    --color-surface: 255 255 255;    /* cards / panels */
+    --color-elevated: 249 248 244;   /* faintly raised warm off-white */
     /* Text */
-    --color-paper: 244 243 240;
-    --color-muted: 155 155 163;
-    --color-faint: 110 110 118;
+    --color-paper: 20 20 22;         /* primary text (near-black) */
+    --color-muted: 88 88 94;         /* secondary text */
+    --color-faint: 138 138 144;      /* tertiary text */
     /* Lines */
-    --color-line: 38 38 43;
-    --color-line-strong: 58 58 66;
-    /* Signature accent — Iris */
-    --color-iris: 124 92 252;
-    --color-iris-soft: 155 130 255;
-    --color-iris-strong: 94 62 224;
-    --color-iris-contrast: 245 244 255;
+    --color-line: 228 226 221;       /* hairline dividers */
+    --color-line-strong: 17 17 19;   /* the black comic keyline */
+    /* Brand — Dragon Ball palette (from the logos) */
+    --color-kame: 204 35 42;         /* Kame red — primary action */
+    --color-kame-soft: 224 62 68;
+    --color-kame-strong: 168 24 30;
+    --color-saiyan: 255 218 0;       /* Saiyan gold — highlight / Von Restorff */
+    --color-saiyan-ink: 20 18 0;     /* text that sits on yellow */
+    --color-flame: 228 157 49;       /* Dragon Ball orange */
+    --color-on-brand: 255 255 255;   /* text on red */
+    /* iris kept as a back-compat alias → maps to Kame red */
+    --color-iris: 204 35 42;
+    --color-iris-soft: 224 62 68;
+    --color-iris-strong: 168 24 30;
+    --color-iris-contrast: 255 255 255;
     /* Functional */
+    --color-success: 33 145 90;
+    --color-warning: 176 116 20;
+    --color-danger: 204 35 42;
+
+    --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+    --keyline: 2px;
+
+    color-scheme: light;
+  }
+
+  .dark {
+    /* Supported dark theme — inverts the canvas, keeps the DBZ accents hot. */
+    --color-ink: 14 14 16;
+    --color-surface: 22 22 25;
+    --color-elevated: 30 30 34;
+    --color-paper: 244 243 240;
+    --color-muted: 162 162 168;
+    --color-faint: 116 116 122;
+    --color-line: 44 44 49;
+    --color-line-strong: 240 240 240;
+    --color-kame: 232 58 64;
+    --color-kame-soft: 246 92 98;
+    --color-kame-strong: 204 35 42;
+    --color-saiyan: 255 224 40;
+    --color-saiyan-ink: 20 18 0;
+    --color-flame: 240 172 66;
+    --color-on-brand: 255 255 255;
+    --color-iris: 232 58 64;
+    --color-iris-soft: 246 92 98;
+    --color-iris-strong: 204 35 42;
+    --color-iris-contrast: 255 255 255;
     --color-success: 74 201 137;
     --color-warning: 232 168 56;
     --color-danger: 232 82 82;
 
-    --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
-
     color-scheme: dark;
-  }
-
-  .light {
-    --color-ink: 249 248 245;
-    --color-surface: 255 255 255;
-    --color-elevated: 244 243 240;
-    --color-paper: 22 22 26;
-    --color-muted: 92 92 100;
-    --color-faint: 132 132 140;
-    --color-line: 226 224 219;
-    --color-line-strong: 202 200 194;
-    --color-iris: 94 62 224;
-    --color-iris-soft: 124 92 252;
-    --color-iris-strong: 74 46 190;
-    --color-iris-contrast: 255 255 255;
-    --color-success: 34 150 94;
-    --color-warning: 176 116 20;
-    --color-danger: 196 52 52;
-
-    color-scheme: light;
   }
 
   * {
@@ -74,24 +97,19 @@
 
   /* Visible, on-brand keyboard focus everywhere. */
   :focus-visible {
-    outline: 2px solid rgb(var(--color-iris));
+    outline: 2px solid rgb(var(--color-kame));
     outline-offset: 2px;
-    border-radius: 3px;
+    border-radius: 2px;
   }
 
-  /* Tabular figures for prices, counts, and countdowns. */
   .tabular {
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum";
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-    *,
-    *::before,
-    *::after {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
       animation-duration: 0.001ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
@@ -109,8 +127,32 @@
     @apply font-mono text-label uppercase text-muted;
   }
 
-  /* Thin tick divider used to segment spec content. */
   .tick {
-    @apply inline-block h-3 w-px bg-line-strong align-middle;
+    @apply inline-block h-3 w-px bg-line-strong/40 align-middle;
+  }
+
+  /*
+   * Comic keyline panel — the signature surface. A hard black outline plus a
+   * flat offset shadow (no blur) evokes the heavy inking of the brand logos
+   * and the DBZ cel look. Deliberately NOT a soft glassy card.
+   */
+  .panel {
+    @apply rounded-md border-[var(--keyline)] border-line-strong bg-surface;
+    box-shadow: 4px 4px 0 0 rgb(var(--color-line-strong));
+  }
+  .panel-hover {
+    transition: transform 0.18s var(--ease-brand), box-shadow 0.18s var(--ease-brand);
+  }
+  .panel-hover:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 0 rgb(var(--color-line-strong));
+  }
+
+  /* Saiyan-gold highlight swipe behind inline text (Von Restorff). */
+  .mark-gold {
+    background-image: linear-gradient(rgb(var(--color-saiyan)), rgb(var(--color-saiyan)));
+    background-repeat: no-repeat;
+    background-position: 0 88%;
+    background-size: 100% 0.34em;
   }
 }

@@ -23,7 +23,7 @@ export default function Error({
   return (
     <Container className="flex min-h-[60vh] flex-col items-start justify-center py-20">
       <p className="spec-line text-danger">Something broke</p>
-      <h1 className="mt-5 max-w-[18ch] font-display text-d-lg font-bold text-paper md:text-d-xl">
+      <h1 className="mt-5 max-w-[18ch] font-poster text-d-lg uppercase tracking-tight text-paper md:text-d-xl">
         We hit a snag loading this page.
       </h1>
       <p className="mt-4 max-w-prose text-lg text-muted">

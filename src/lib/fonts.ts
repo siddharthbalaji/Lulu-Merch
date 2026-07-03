@@ -1,4 +1,4 @@
-import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Anton, Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 
 /**
  * Three type roles, exposed as CSS variables so faces can be swapped in one
@@ -13,6 +13,19 @@ import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
  * /public/fonts and switch the import here to next/font/local — nothing else
  * changes because everything downstream reads the CSS variables above.
  */
+
+/**
+ * Poster face — a heavy, condensed impact letterform for hero-scale
+ * statements. It carries the bold, high-energy voice of the brand logotype
+ * without touching the (copyrighted) Saiyan display typeface. Used sparingly,
+ * only where a headline should hit like a title card.
+ */
+export const fontPoster = Anton({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-poster",
+  display: "swap",
+});
 
 export const fontDisplay = Space_Grotesk({
   subsets: ["latin"],
@@ -34,4 +47,4 @@ export const fontMono = JetBrains_Mono({
   display: "swap",
 });
 
-export const fontVariables = `${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable}`;
+export const fontVariables = `${fontPoster.variable} ${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable}`;

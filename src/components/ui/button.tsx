@@ -9,27 +9,34 @@ import { cn } from "@/lib/utils";
  * Radius is intentionally tight (brief bans over-rounded).
  */
 const buttonVariants = cva(
-  "inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded font-medium " +
-    "transition-[background-color,border-color,color,transform] duration-200 ease-brand " +
-    "focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 " +
-    "active:translate-y-px",
+  "inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded font-semibold " +
+    "transition-[background-color,border-color,color,transform,box-shadow] duration-150 ease-brand " +
+    "focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
+        // Primary — Kame red, black keyline, hard offset shadow that presses in on click.
         primary:
-          "bg-iris text-iris-contrast hover:bg-iris-strong",
+          "border-2 border-line-strong bg-kame text-on-brand shadow-hard " +
+          "hover:bg-kame-strong hover:-translate-x-px hover:-translate-y-px hover:shadow-hard-lg " +
+          "active:translate-x-0 active:translate-y-0 active:shadow-none",
+        // Secondary — Saiyan gold on black text, same inked frame.
         secondary:
-          "bg-elevated text-paper border border-line-strong hover:border-paper/40 hover:bg-elevated/70",
+          "border-2 border-line-strong bg-saiyan text-saiyan-ink shadow-hard " +
+          "hover:-translate-x-px hover:-translate-y-px hover:shadow-hard-lg " +
+          "active:translate-x-0 active:translate-y-0 active:shadow-none",
+        // Outline — inked frame on the white canvas.
         outline:
-          "border border-line-strong text-paper hover:border-paper/50 hover:bg-paper/[0.03]",
-        ghost: "text-muted hover:bg-paper/[0.05] hover:text-paper",
-        link: "text-paper underline-offset-4 hover:underline",
+          "border-2 border-line-strong bg-surface text-paper " +
+          "hover:bg-elevated active:translate-y-px",
+        ghost: "text-muted hover:bg-paper/[0.06] hover:text-paper active:translate-y-px",
+        link: "font-medium text-kame underline-offset-4 hover:underline",
       },
       size: {
         sm: "h-9 px-3 text-sm",
         md: "h-11 px-5 text-sm",
         lg: "h-12 px-7 text-base",
-        icon: "h-10 w-10",
+        icon: "h-11 w-11",
       },
     },
     defaultVariants: {

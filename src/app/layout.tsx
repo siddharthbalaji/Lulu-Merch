@@ -6,15 +6,16 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { SkipLink } from "@/components/layout/skip-link";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { CartDrawer } from "@/features/cart/cart-drawer";
 
 export const metadata: Metadata = baseMetadata;
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0b0b0d" },
-    { media: "(prefers-color-scheme: light)", color: "#f9f8f5" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0e0e10" },
   ],
-  colorScheme: "dark light",
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
@@ -43,6 +44,7 @@ export default function RootLayout({
             </main>
             <SiteFooter />
           </div>
+          <CartDrawer />
         </ThemeProvider>
       </body>
     </html>

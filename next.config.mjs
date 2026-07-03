@@ -5,7 +5,9 @@ const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     // Remote product/CDN hosts get added per-feature as sources come online.
-    remotePatterns: [],
+    remotePatterns: [
+      { protocol: "https", hostname: "res.cloudinary.com" },
+    ],
   },
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion"],

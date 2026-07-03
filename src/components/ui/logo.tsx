@@ -1,26 +1,43 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface LogoProps {
-  /** Compact hides the descriptor tag (mobile / tight spaces). */
-  compact?: boolean;
+  /**
+   * Which mark to render:
+   *   "wordmark" — the full LULU · MERCH logotype (top of page, footer).
+   *   "mark"     — the compact swirl monogram (header on scroll, tight spaces).
+   */
+  variant?: "wordmark" | "mark";
   className?: string;
+  priority?: boolean;
 }
 
 /**
- * Wordmark: display "LULU" set tight, paired with a mono descriptor that
- * carries the collector/spec-sheet voice. No icon gimmick — the type is the mark.
+ * Brand logo. Renders the supplied artwork (never a re-typeset wordmark) so the
+ * mark on screen is always the real, inked brand asset. Both files are trimmed,
+ * transparent PNGs sized for retina; next/image handles responsive delivery.
  */
-export function Logo({ compact = false, className }: LogoProps) {
+export function Logo({ variant = "wordmark", className, priority = false }: LogoProps) {
+  if (variant === "mark") {
+    return (
+      <Image
+        src="/brand/lulu-mark.png"
+        alt="Lulu Merch"
+        width={512}
+        height={535}
+        priority={priority}
+        className={cn("h-full w-auto select-none", className)}
+      />
+    );
+  }
   return (
-    <span className={cn("inline-flex items-baseline gap-2", className)}>
-      <span className="font-display text-[1.35rem] font-bold leading-none tracking-[-0.04em] text-paper">
-        LULU
-      </span>
-      {!compact && (
-        <span className="spec-line text-[0.6rem] leading-none text-muted">
-          MERCH·CO
-        </span>
-      )}
-    </span>
+    <Image
+      src="/brand/lulu-wordmark.png"
+      alt="Lulu Merch Co."
+      width={1200}
+      height={273}
+      priority={priority}
+      className={cn("h-full w-auto select-none", className)}
+    />
   );
 }
