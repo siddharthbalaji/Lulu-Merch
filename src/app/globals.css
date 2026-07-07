@@ -195,10 +195,23 @@
    */
   .dbz-outline {
     color: #ffffff;
+    /*
+     * Each glyph gets its own hard black keyline; paint-order keeps the stroke
+     * behind the fill so the white centre of every letter stays open.
+     */
     -webkit-text-stroke: 2px #0b0b0d;
     paint-order: stroke fill;
-    text-shadow: 0 2px 0 rgb(0 0 0 / 0.12);
-    letter-spacing: 0.03em;
+    text-shadow: 0 2px 0 rgb(0 0 0 / 0.14);
+    /*
+     * Positive tracking, forced past the NEGATIVE letter-spacing that the
+     * display font-size utilities (text-d-lg / text-d-xl / …) bake in. Those
+     * utilities live in Tailwind's `utilities` layer and would otherwise win
+     * the cascade, pulling glyphs together until neighbouring 2px strokes
+     * overlap and the letters read as one fused blob. The !important is the
+     * deliberate escape hatch so every stroked letter stands as its own shape.
+     */
+    letter-spacing: 0.06em !important;
+    word-spacing: 0.08em;
   }
   /* Graceful fallback where text-stroke is unsupported: solid, still legible. */
   @supports not ((-webkit-text-stroke: 2px #000) or (text-stroke: 2px #000)) {
@@ -215,6 +228,20 @@
         -2px -2px 0 #0b0b0d, 2px -2px 0 #0b0b0d, -2px 2px 0 #0b0b0d, 2px 2px 0 #0b0b0d,
         0 5px 0 #0b0b0d;
     }
+  }
+
+  /*
+   * Overlay chip — for small labels that sit ON TOP of a product photo (status
+   * dots, drop names, kickers). The photo behind them can be any colour, so a
+   * fixed text colour alone could vanish (dark text on a black tee, light text
+   * on a white tee). Pinning the label to a translucent plate in the card's own
+   * `surface` colour restores the design's intended text/background contrast in
+   * BOTH themes, whatever the image looks like. A faint blur softens the edge.
+   */
+  .overlay-chip {
+    @apply rounded-sm bg-surface/85 px-1.5 py-0.5;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
   }
 
   /* Saiyan-gold highlight swipe behind inline text (Von Restorff). */

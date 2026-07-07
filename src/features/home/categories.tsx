@@ -75,6 +75,24 @@ export function Categories() {
                 />
               </div>
 
+              {/* Legibility scrims — keep the kicker (top) and label (bottom)
+                  readable over any photo by grounding them on the tile's own
+                  colour (surface, or Kame red on the accent tile). */}
+              <div
+                aria-hidden
+                className={cn(
+                  "pointer-events-none absolute inset-x-0 top-0 z-[1] h-16 bg-gradient-to-b to-transparent",
+                  cat.accent ? "from-kame" : "from-surface"
+                )}
+              />
+              <div
+                aria-hidden
+                className={cn(
+                  "pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-24 bg-gradient-to-t to-transparent",
+                  cat.accent ? "from-kame via-kame/85" : "from-surface via-surface/85"
+                )}
+              />
+
               {/* Real product photo */}
               <div className="pointer-events-none absolute inset-x-0 bottom-6 top-8 flex items-center justify-center">
                 <div className="relative h-full w-full">

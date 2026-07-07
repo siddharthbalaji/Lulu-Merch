@@ -42,7 +42,13 @@ export function NewDrops() {
         <div className="mt-8 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
           {/* lead story */}
           <Link href={`/product/${lead.slug}`} className="panel panel-hover group relative flex min-h-[22rem] flex-col justify-between overflow-hidden p-6">
-            <div className="flex items-center justify-between">
+            {/* Legibility scrims — ground the badge row (top) and title/price
+                block (bottom) on the panel's surface colour so they stay
+                readable over any product photo, light or dark. */}
+            <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-24 bg-gradient-to-b from-surface to-transparent" />
+            <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-44 bg-gradient-to-t from-surface via-surface/85 to-transparent" />
+
+            <div className="relative z-10 flex items-center justify-between">
               <span className="spec-line rounded-sm border-2 border-line-strong bg-saiyan px-2 py-1 text-saiyan-ink">Latest</span>
               <span className="spec-line text-muted">{lead.line}</span>
             </div>
@@ -56,7 +62,7 @@ export function NewDrops() {
                 priority
               />
             </div>
-            <div className="relative">
+            <div className="relative z-10">
               <h3 className="font-poster text-3xl uppercase leading-none dbz-outline">{lead.name}</h3>
               <p className="spec-line mt-2">{lead.className} · {lead.spec}</p>
               <p className="mt-3 font-mono text-lg font-semibold tabular text-paper">{formatPrice(lead.price)}</p>

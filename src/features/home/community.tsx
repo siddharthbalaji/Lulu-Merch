@@ -69,7 +69,7 @@ export function Community() {
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                   className="object-contain p-4 transition-transform duration-500 ease-brand group-hover:scale-105"
                 />
-                <span className="spec-line absolute bottom-2 left-2 z-10 text-[0.55rem] text-faint">{p.name}</span>
+                <span className="overlay-chip spec-line absolute bottom-2 left-2 z-10 text-[0.55rem] text-muted">{p.name}</span>
               </Link>
             </li>
           ))}

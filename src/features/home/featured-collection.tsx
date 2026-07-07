@@ -86,7 +86,7 @@ function PieceCard({ piece }: { piece: Product }) {
     >
       {/* stage — real product photo, alternate shot on hover if present */}
       <div className="relative aspect-square w-full overflow-hidden rounded border-2 border-line-strong bg-elevated">
-        <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5">
+        <span className="overlay-chip absolute left-3 top-3 z-10 inline-flex items-center gap-1.5">
           <span className={`h-1.5 w-1.5 rounded-full ${availabilityDot[piece.availability]}`} aria-hidden />
           <span className="spec-line text-[0.6rem] text-muted">{availabilityLabel[piece.availability]}</span>
         </span>
