@@ -47,8 +47,12 @@ export function Hero() {
   const plateY = reduce ? 0 : rawY;
 
   return (
-    <section ref={sectionRef} aria-labelledby="hero-heading" className="border-b-2 border-line-strong">
-      <Container className="py-7 md:py-12 lg:py-16">
+    <section
+      ref={sectionRef}
+      aria-labelledby="hero-heading"
+      className="flex min-h-[calc(100svh-8rem)] items-center border-b-2 border-line-strong"
+    >
+      <Container className="w-full py-10 md:py-12 lg:py-16">
         <motion.div
           className="grid items-center gap-8 md:gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16"
           variants={stagger}
@@ -62,8 +66,6 @@ export function Hero() {
               </span>
               <span className="tick" />
               <span>Drop {drop.dropNo}</span>
-              <span className="tick" />
-              <span>{drop.editionSize} numbered sets</span>
             </motion.p>
 
             <motion.h1
@@ -97,8 +99,6 @@ export function Hero() {
               </span>
               <span className="tick" />
               <span>Ships in 48h</span>
-              <span className="tick" />
-              <span className="tabular">{drop.claimed}/{drop.editionSize} claimed</span>
             </motion.p>
           </div>
 
@@ -145,10 +145,6 @@ function HeroPlate() {
         <div className="pointer-events-none absolute right-3 top-1/3 flex items-center gap-2">
           <span className="spec-line text-[0.6rem] text-faint">{p.spec.split(" ").slice(0, 2).join(" ")}</span>
           <span className="h-px w-6 bg-line-strong" aria-hidden />
-        </div>
-        <div className="pointer-events-none absolute bottom-1/3 left-3 flex items-center gap-2">
-          <span className="h-px w-6 bg-line-strong" aria-hidden />
-          <span className="spec-line tabular text-[0.6rem] text-faint">{p.claimed}/{p.editionSize}</span>
         </div>
       </div>
 

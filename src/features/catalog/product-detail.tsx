@@ -45,7 +45,6 @@ export function ProductDetail({ product }: { product: Product }) {
   const wished = useWishlist((s) => s.slugs.includes(product.slug));
   const toggleWish = useWishlist((s) => s.toggle);
   const soldOut = product.availability === "waitlist";
-  const claimedPct = Math.min(100, Math.round((product.claimed / product.editionSize) * 100));
 
   const addToCart = () => {
     if (soldOut) return;
@@ -127,20 +126,12 @@ export function ProductDetail({ product }: { product: Product }) {
           )}
         </div>
 
-        {/* honest scarcity, not a fake rating */}
+        {/* availability status (stock counts removed) */}
         <div className="mt-5 rounded border-2 border-line-strong bg-surface p-3">
-          <div className="flex items-center justify-between text-sm">
-            <span className="inline-flex items-center gap-2 font-medium text-paper">
-              <span className={cn("h-2 w-2 rounded-full", availabilityDot[product.availability])} />
-              {availabilityLabel[product.availability]}
-            </span>
-            <span className="font-mono tabular text-muted">
-              {product.claimed}/{product.editionSize} claimed
-            </span>
-          </div>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-elevated">
-            <div className="h-full rounded-full bg-kame" style={{ width: `${claimedPct}%` }} />
-          </div>
+          <span className="inline-flex items-center gap-2 text-sm font-medium text-paper">
+            <span className={cn("h-2 w-2 rounded-full", availabilityDot[product.availability])} />
+            {availabilityLabel[product.availability]}
+          </span>
         </div>
 
         {/* colour */}

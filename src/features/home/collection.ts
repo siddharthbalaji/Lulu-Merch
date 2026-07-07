@@ -66,7 +66,7 @@ export const featuredDrop: FeaturedDrop = {
   editionSize: 300,
   claimed: 214,
   blurb:
-    "The house capsule. Heavyweight staples cut oversized, printed in-house, and numbered to 300 sets. Sold as it drops — no restock, no second run.",
+    "The house capsule. Heavyweight staples cut oversized, printed in-house, and numbered by hand. Sold as it drops — no restock, no second run.",
   hero: "hoodie",
   pieces: [
     {

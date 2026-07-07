@@ -259,7 +259,7 @@ function CartButton() {
 function AnnouncementTicker() {
   const items = [
     "Free shipping over ₹1,500",
-    "Vol. 01 · Nocturne — numbered to 300 sets",
+    "Vol. 01 · Nocturne — the house capsule",
     "Ships in 48h across India",
     "No restock. No second run.",
   ];
