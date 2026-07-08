@@ -3,60 +3,74 @@ import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { DragonStar } from "@/components/ui/star";
+import { cn } from "@/lib/utils";
 
 /**
  * "More than merch" — a coming-soon band for the lifestyle line beyond apparel:
  * figures, audio, desk gear and drinkware.
  *
- * The four product renders come at different aspect ratios (a tall figurine, a
- * wide keyboard, near-square headphones, a tall tumbler). Rather than force them
- * into equal-height cells — which letterboxes each shot with dead space — the
- * tiles flow in a MASONRY bento: every card sizes itself to its own image, so
- * the artwork sits edge-to-edge with no empty margins. The columns balance the
- * differing heights into a tight, deliberate mosaic.
+ * Layout: a true BENTO — one fixed rectangle carved into cells of different
+ * sizes, every cell FILLED by its render (object-cover), so the whole block
+ * reads as a single solid mosaic with no ragged edges or letterboxing. The two
+ * tall products (figurine, tumbler) take the portrait side columns; the wider
+ * pair (keyboard, headphones) stack in the middle. On mobile it folds down to a
+ * 2-column rectangle: the two tall shots up top, the two wide ones beneath.
+ *
+ * The Cloudinary `e_trim` transform strips any empty margin baked into each PNG
+ * so the product meets the cell edges instead of floating inside transparent
+ * padding. If a shot ever looks over-cropped, remove `e_trim/` from its URL.
  *
  * Copyright note: these are our own product renders / plain category labels —
  * consistent with the rest of the store, no third-party artwork.
  *
  * UX rationale (Laws of UX):
- *   Law of Pragnanz  — cards that hug their image read as one clean shape each.
+ *   Law of Pragnanz — the filled rectangle reads as one clean, ordered shape.
  *   Law of Similarity — the shared inked-panel language ties it to the live grid.
- *   Aesthetic-Usability — the balanced mosaic reads as intentional, not broken.
+ *   Aesthetic-Usability — a balanced mosaic reads as intentional, not broken.
  *   Goal Gradient — a single "Notify me" exit routes interest to the drop alert.
  */
 
-/** A single bento tile: its display label, a small kicker, and the product render. */
+/** A single bento tile: label, kicker, product render, and its grid footprint. */
 interface BentoItem {
   label: string;
   kicker: string;
   image: string;
+  /** Responsive grid placement: 2-col rectangle on mobile, 4-col on desktop. */
+  area: string;
 }
 
-/* Ordered tallest-first so the masonry balances the columns cleanly. */
+/** Trim baked-in margins so the product fills its cell edge-to-edge. */
+const trim = (publicPath: string) =>
+  `https://res.cloudinary.com/dxqucwyyo/image/upload/e_trim/${publicPath}`;
+
 const items: BentoItem[] = [
   {
     label: "Figurine",
     kicker: "Collectible",
-    image:
-      "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783505114/Figurine_ttwefy.png",
+    image: trim("v1783505114/Figurine_ttwefy.png"),
+    // Tall portrait — left column, full height, both breakpoints.
+    area: "col-start-1 row-start-1 row-span-2",
   },
   {
     label: "Keyboard",
     kicker: "Desk setup",
-    image:
-      "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783505116/Keyboard_fewom2.png",
+    image: trim("v1783505116/Keyboard_fewom2.png"),
+    // Wide — full width row on mobile; top-middle strip on desktop.
+    area: "col-start-1 col-span-2 row-start-3 lg:col-start-2 lg:row-start-1",
   },
   {
     label: "Headphones",
     kicker: "Audio",
-    image:
-      "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783505115/Headphones_djbblb.png",
+    image: trim("v1783505115/Headphones_djbblb.png"),
+    // Wide — full width row on mobile; bottom-middle strip on desktop.
+    area: "col-start-1 col-span-2 row-start-4 lg:col-start-2 lg:row-start-2",
   },
   {
     label: "Tumbler",
     kicker: "Drinkware",
-    image:
-      "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783505114/Tumbler_gpte63.png",
+    image: trim("v1783505114/Tumbler_gpte63.png"),
+    // Tall portrait — right column, full height, both breakpoints.
+    area: "col-start-2 row-start-1 row-span-2 lg:col-start-4",
   },
 ];
 
@@ -97,33 +111,29 @@ export function ManyMore() {
         </div>
 
         {/*
-          Masonry bento: 2 columns on mobile, 3 on desktop. Each tile is a
-          `break-inside-avoid` block whose height follows its own image, so the
-          render fills the card edge-to-edge with no letterboxing.
+          Bento grid. Mobile: 2 columns × 4 rows (two tall shots up top, two
+          wide ones beneath). Desktop: 4 columns × 2 rows (tall figurine and
+          tumbler bookend a stacked keyboard/headphones middle). Fixed row
+          heights + object-cover make every cell fill, so the block is one
+          seamless rectangle.
         */}
-        <ul className="mt-8 columns-2 gap-3 [column-fill:_balance] sm:gap-4 lg:columns-3">
+        <ul className="mt-6 grid auto-rows-[8.5rem] grid-cols-2 gap-3 sm:auto-rows-[10.5rem] sm:gap-4 lg:mt-8 lg:grid-cols-4 lg:auto-rows-[13.5rem]">
           {items.map((item) => (
-            <li key={item.label} className="mb-3 break-inside-avoid sm:mb-4">
-              <div
-                className="panel panel-hover group relative overflow-hidden"
-                aria-label={`${item.label} — coming soon`}
-              >
-                {/* product render — sized to its natural aspect ratio so the
-                    card wraps it tightly (width 0 / height 0 + w-full h-auto is
-                    the Next.js pattern for images of unknown intrinsic size) */}
+            <li key={item.label} className={item.area}>
+              <div className="panel panel-hover group relative h-full overflow-hidden">
+                {/* product render — fills the cell edge-to-edge */}
                 <Image
                   src={item.image}
                   alt={`${item.label} — coming soon`}
-                  width={0}
-                  height={0}
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 40vw, 30vw"
-                  className="h-auto w-full transition-transform duration-500 ease-brand group-hover:scale-[1.04]"
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                  className="object-cover object-center transition-transform duration-500 ease-brand group-hover:scale-[1.04]"
                 />
 
                 {/* legibility scrim — grounds the label without bleaching the render */}
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-ink/90 via-ink/45 to-transparent"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent"
                 />
 
                 {/* diagonal COMING SOON ribbon */}
@@ -134,8 +144,8 @@ export function ManyMore() {
                   Soon
                 </span>
 
-                {/* label block, pinned to the bottom edge of the card */}
-                <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-1 p-4">
+                {/* label block, pinned to the bottom edge of the cell */}
+                <div className={cn("absolute inset-x-0 bottom-0 z-10 flex flex-col gap-1 p-4")}>
                   <span className="spec-line text-paper [text-shadow:0_1px_3px_rgb(0_0_0/0.7)]">
                     {item.kicker}
                   </span>
