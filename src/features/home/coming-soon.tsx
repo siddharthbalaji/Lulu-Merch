@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Gamepad2, Clapperboard } from "lucide-react";
 import { Container } from "@/components/ui/container";
@@ -20,10 +21,16 @@ import { cn } from "@/lib/utils";
  *   Law of Similarity — grouped grids read as one taxonomy per universe.
  */
 
+/** A single upcoming tile: its display label and the franchise artwork behind it. */
+interface Item {
+  label: string;
+  image: string;
+}
+
 interface Group {
   /** Optional sub-label that splits a section into clusters (e.g. Marvel / DC). */
   cluster?: string;
-  items: string[];
+  items: Item[];
 }
 
 function ComingSoonBand({
@@ -85,26 +92,41 @@ function ComingSoonBand({
                 </h3>
               )}
               <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-                {group.items.map((label) => (
-                  <li key={label}>
+                {group.items.map((item) => (
+                  <li key={item.label}>
                     <div
                       className="panel group relative flex aspect-[16/9] flex-col justify-between overflow-hidden p-4 sm:aspect-[3/2]"
-                      aria-label={`${label} — coming soon`}
+                      aria-label={`${item.label} — coming soon`}
                     >
+                      {/* franchise artwork sits behind everything */}
+                      <Image
+                        src={item.image}
+                        alt=""
+                        aria-hidden
+                        fill
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        className="object-cover transition-transform duration-500 ease-brand group-hover:scale-105"
+                      />
+                      {/* legibility scrim — grounds the label over any artwork */}
+                      <div
+                        aria-hidden
+                        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/45 to-ink/25"
+                      />
+
                       {/* diagonal COMING SOON ribbon */}
                       <span
                         aria-hidden
-                        className="pointer-events-none absolute -right-10 top-3 rotate-45 bg-line-strong px-10 py-0.5 text-center font-mono text-[0.5rem] uppercase tracking-widest text-ink"
+                        className="pointer-events-none absolute -right-10 top-3 z-20 rotate-45 bg-line-strong px-10 py-0.5 text-center font-mono text-[0.5rem] uppercase tracking-widest text-ink"
                       >
                         Soon
                       </span>
 
-                      <span className="spec-line text-faint">
+                      <span className="spec-line relative z-10 text-paper/80">
                         {tone === "gaming" ? "Game" : "Title"}
                       </span>
 
-                      <span className="font-poster text-xl uppercase leading-none dbz-outline">
-                        {label}
+                      <span className="relative z-10 font-poster text-xl uppercase leading-none dbz-outline">
+                        {item.label}
                       </span>
                     </div>
                   </li>
@@ -141,14 +163,14 @@ export function Gaming() {
       groups={[
         {
           items: [
-            "League of Legends",
-            "Valorant",
-            "Genshin Impact",
-            "Elden Ring",
-            "Cyberpunk 2077",
-            "The Witcher",
-            "Minecraft",
-            "Overwatch",
+            { label: "League of Legends", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490817/League_of_Legends_jzedtc.jpg" },
+            { label: "Valorant", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490812/Valorant_f6afbz.jpg" },
+            { label: "Genshin Impact", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490816/Genshin_Impact_xodsxi.png" },
+            { label: "Elden Ring", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490809/Elden_Ring_pqqtzi.jpg" },
+            { label: "Cyberpunk 2077", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490817/Cyberpunk_2077_dnw9ep.jpg" },
+            { label: "The Witcher", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490813/Witcher_wzaeei.jpg" },
+            { label: "Minecraft", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490810/Minecraft_b1ywzl.jpg" },
+            { label: "Overwatch", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490810/Overwatch_krimdu.jpg" },
           ],
         },
       ]}
@@ -168,11 +190,21 @@ export function Movies() {
       groups={[
         {
           cluster: "Marvel",
-          items: ["Avengers", "Spider-Man", "X-Men", "Guardians of the Galaxy"],
+          items: [
+            { label: "Avengers", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490810/Avengers_a37chc.jpg" },
+            { label: "Spider-Man", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490811/Spider-Man_iqnach.jpg" },
+            { label: "X-Men", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490812/X-Men_lwf8zz.jpg" },
+            { label: "Guardians of the Galaxy", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490819/Guardians_of_the_Galaxy_ygp83y.jpg" },
+          ],
         },
         {
           cluster: "DC",
-          items: ["Batman", "Superman", "Justice League", "The Flash"],
+          items: [
+            { label: "Batman", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490809/Batman_gs4ryi.jpg" },
+            { label: "Superman", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783491353/Superman_h8mkpe.jpg" },
+            { label: "Justice League", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490811/Justice_League_iaue19.jpg" },
+            { label: "The Flash", image: "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783490813/Flash_m2qt5o.jpg" },
+          ],
         },
       ]}
     />
