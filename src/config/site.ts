@@ -14,9 +14,9 @@ export const siteConfig = {
   locale: "en_IN",
   currency: "INR",
   social: {
-    instagram: "https://instagram.com/lulumerch",
-    x: "https://x.com/lulumerch",
-    youtube: "https://youtube.com/@lulumerch",
+    facebook: "https://www.facebook.com/lulumerchofficial/",
+    instagram: "https://www.instagram.com/lulumerchofficial/",
+    youtube: "https://www.youtube.com/@lulumerchofficial",
   },
 } as const;
 

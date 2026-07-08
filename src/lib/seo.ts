@@ -40,7 +40,7 @@ export const baseMetadata: Metadata = {
     card: "summary_large_image",
     title: `${siteConfig.name} — ${siteConfig.tagline}`,
     description: siteConfig.description,
-    creator: "@lulumerch",
+    creator: "@lulumerchofficial",
   },
   robots: {
     index: true,
@@ -58,8 +58,8 @@ export function organizationJsonLd() {
     url: siteConfig.url,
     description: siteConfig.description,
     sameAs: [
+      siteConfig.social.facebook,
       siteConfig.social.instagram,
-      siteConfig.social.x,
       siteConfig.social.youtube,
     ],
   };

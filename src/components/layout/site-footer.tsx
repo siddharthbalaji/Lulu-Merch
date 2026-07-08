@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Instagram, Youtube } from "lucide-react";
+import { Facebook, Instagram, Youtube } from "lucide-react";
 import { footerNav, siteConfig } from "@/config/site";
 import { Container } from "@/components/ui/container";
 import { Logo } from "@/components/ui/logo";
@@ -62,6 +62,13 @@ export function SiteFooter() {
             worldwide
           </p>
           <div className="flex items-center gap-4">
+            <Link
+              href={siteConfig.social.facebook}
+              aria-label="Lulu Merch on Facebook"
+              className="text-muted transition-colors hover:text-paper"
+            >
+              <Facebook className="h-5 w-5" aria-hidden />
+            </Link>
             <Link
               href={siteConfig.social.instagram}
               aria-label="Lulu Merch on Instagram"
