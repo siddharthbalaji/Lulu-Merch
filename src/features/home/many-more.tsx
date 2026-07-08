@@ -54,14 +54,14 @@ const items: BentoItem[] = [
   {
     label: "Keyboard",
     kicker: "Desk setup",
-    image: trim("v1783505116/Keyboard_fewom2.png"),
+    image: trim("v1783524324/Keyboard_fewom2.png"),
     // Wide — full width row on mobile; top-middle strip on desktop.
     area: "col-start-1 col-span-2 row-start-3 lg:col-start-2 lg:row-start-1",
   },
   {
     label: "Headphones",
     kicker: "Audio",
-    image: trim("v1783505115/Headphones_djbblb.png"),
+    image: trim("v1783523018/Headphones_djbblb.png"),
     // Wide — full width row on mobile; bottom-middle strip on desktop.
     area: "col-start-1 col-span-2 row-start-4 lg:col-start-2 lg:row-start-2",
   },
