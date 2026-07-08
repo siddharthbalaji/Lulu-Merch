@@ -57,9 +57,11 @@ export const useCart = create<CartState>()(
       setQty: (slug, size, color, qty) =>
         set((s) => ({
           lines: s.lines
+            // Clamp to a floor of 0 (never negative), then drop any line that
+            // reaches 0 — so pressing "−" at qty 1 removes the item entirely.
             .map((l) =>
               sameLine(l, slug, size, color)
-                ? { ...l, qty: Math.max(1, qty) }
+                ? { ...l, qty: Math.max(0, qty) }
                 : l
             )
             .filter((l) => l.qty > 0),
