@@ -107,10 +107,12 @@ function ComingSoonBand({
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                         className="object-cover transition-transform duration-500 ease-brand group-hover:scale-105"
                       />
-                      {/* legibility scrim — grounds the label over any artwork */}
+                      {/* legibility scrim — grounds the label at the bottom, then
+                          fades out by the midpoint so the top half of the artwork
+                          keeps its full, un-bleached vibrance */}
                       <div
                         aria-hidden
-                        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/45 to-ink/25"
+                        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/90 via-ink/50 to-transparent"
                       />
 
                       {/* diagonal COMING SOON ribbon */}
@@ -121,7 +123,7 @@ function ComingSoonBand({
                         Soon
                       </span>
 
-                      <span className="spec-line relative z-10 text-paper/80">
+                      <span className="spec-line relative z-10 text-paper [text-shadow:0_1px_3px_rgb(0_0_0/0.7)]">
                         {tone === "gaming" ? "Game" : "Title"}
                       </span>
 
