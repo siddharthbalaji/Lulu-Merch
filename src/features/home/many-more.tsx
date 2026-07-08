@@ -3,64 +3,60 @@ import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { DragonStar } from "@/components/ui/star";
-import { cn } from "@/lib/utils";
 
 /**
  * "More than merch" — a coming-soon band for the lifestyle line beyond apparel:
- * figures, audio, desk gear and drinkware. The four product renders come in
- * different aspect ratios (a tall figurine, a wide keyboard, near-square
- * headphones and a tall tumbler), so instead of forcing them into an even grid
- * they sit in an asymmetric BENTO layout — each shape gets a cell that suits it.
+ * figures, audio, desk gear and drinkware.
+ *
+ * The four product renders come at different aspect ratios (a tall figurine, a
+ * wide keyboard, near-square headphones, a tall tumbler). Rather than force them
+ * into equal-height cells — which letterboxes each shot with dead space — the
+ * tiles flow in a MASONRY bento: every card sizes itself to its own image, so
+ * the artwork sits edge-to-edge with no empty margins. The columns balance the
+ * differing heights into a tight, deliberate mosaic.
  *
  * Copyright note: these are our own product renders / plain category labels —
  * consistent with the rest of the store, no third-party artwork.
  *
  * UX rationale (Laws of UX):
- *   Von Restorff  — the oversized figurine hero anchors the eye first.
+ *   Law of Pragnanz  — cards that hug their image read as one clean shape each.
  *   Law of Similarity — the shared inked-panel language ties it to the live grid.
- *   Aesthetic-Usability — the bento's varied rhythm reads as intentional, not broken.
+ *   Aesthetic-Usability — the balanced mosaic reads as intentional, not broken.
  *   Goal Gradient — a single "Notify me" exit routes interest to the drop alert.
  */
 
-/** A single bento tile: label, a small kicker, artwork, and its grid footprint. */
+/** A single bento tile: its display label, a small kicker, and the product render. */
 interface BentoItem {
   label: string;
   kicker: string;
   image: string;
-  /** Grid placement. cols map to a 2-col grid on mobile, a 4-col grid on md+. */
-  span: string;
 }
 
+/* Ordered tallest-first so the masonry balances the columns cleanly. */
 const items: BentoItem[] = [
   {
     label: "Figurine",
     kicker: "Collectible",
     image:
       "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783505114/Figurine_ttwefy.png",
-    // Tall hero — full width on mobile, a 2×2 block on desktop.
-    span: "col-span-2 row-span-2",
-  },
-  {
-    label: "Headphones",
-    kicker: "Audio",
-    image:
-      "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783505115/Headphones_djbblb.png",
-    span: "col-span-1 row-span-1",
-  },
-  {
-    label: "Tumbler",
-    kicker: "Drinkware",
-    image:
-      "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783505114/Tumbler_gpte63.png",
-    span: "col-span-1 row-span-1",
   },
   {
     label: "Keyboard",
     kicker: "Desk setup",
     image:
       "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783505116/Keyboard_fewom2.png",
-    // Wide — full width on mobile, a 2-wide strip on desktop.
-    span: "col-span-2 row-span-1",
+  },
+  {
+    label: "Headphones",
+    kicker: "Audio",
+    image:
+      "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783505115/Headphones_djbblb.png",
+  },
+  {
+    label: "Tumbler",
+    kicker: "Drinkware",
+    image:
+      "https://res.cloudinary.com/dxqucwyyo/image/upload/v1783505114/Tumbler_gpte63.png",
   },
 ];
 
@@ -100,30 +96,34 @@ export function ManyMore() {
           </span>
         </div>
 
-        {/* Bento grid: 2 cols on mobile, 4 on desktop. Fixed row heights let
-            the figurine hero span two rows while the rest tile around it. */}
-        <ul className="mt-8 grid auto-rows-[10.5rem] grid-cols-2 gap-3 sm:auto-rows-[12rem] md:auto-rows-[13rem] md:grid-cols-4 md:gap-4">
+        {/*
+          Masonry bento: 2 columns on mobile, 3 on desktop. Each tile is a
+          `break-inside-avoid` block whose height follows its own image, so the
+          render fills the card edge-to-edge with no letterboxing.
+        */}
+        <ul className="mt-8 columns-2 gap-3 [column-fill:_balance] sm:gap-4 lg:columns-3">
           {items.map((item) => (
-            <li key={item.label} className={item.span}>
+            <li key={item.label} className="mb-3 break-inside-avoid sm:mb-4">
               <div
-                className={cn(
-                  "panel panel-hover group relative flex h-full flex-col justify-between overflow-hidden p-4"
-                )}
+                className="panel panel-hover group relative overflow-hidden"
                 aria-label={`${item.label} — coming soon`}
               >
-                {/* product render — contained (not cropped) so no shape is cut off */}
+                {/* product render — sized to its natural aspect ratio so the
+                    card wraps it tightly (width 0 / height 0 + w-full h-auto is
+                    the Next.js pattern for images of unknown intrinsic size) */}
                 <Image
                   src={item.image}
                   alt={`${item.label} — coming soon`}
-                  fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-contain p-6 transition-transform duration-500 ease-brand group-hover:scale-105"
+                  width={0}
+                  height={0}
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 40vw, 30vw"
+                  className="h-auto w-full transition-transform duration-500 ease-brand group-hover:scale-[1.04]"
                 />
 
                 {/* legibility scrim — grounds the label without bleaching the render */}
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/85 via-ink/40 to-transparent"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-ink/90 via-ink/45 to-transparent"
                 />
 
                 {/* diagonal COMING SOON ribbon */}
@@ -134,13 +134,15 @@ export function ManyMore() {
                   Soon
                 </span>
 
-                <span className="spec-line relative z-10 text-paper [text-shadow:0_1px_3px_rgb(0_0_0/0.7)]">
-                  {item.kicker}
-                </span>
-
-                <span className="relative z-10 font-poster text-xl uppercase leading-none dbz-outline">
-                  {item.label}
-                </span>
+                {/* label block, pinned to the bottom edge of the card */}
+                <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-1 p-4">
+                  <span className="spec-line text-paper [text-shadow:0_1px_3px_rgb(0_0_0/0.7)]">
+                    {item.kicker}
+                  </span>
+                  <span className="font-poster text-xl uppercase leading-none dbz-outline">
+                    {item.label}
+                  </span>
+                </div>
               </div>
             </li>
           ))}
